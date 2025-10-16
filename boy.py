@@ -168,4 +168,4 @@ class Boy:
     def handle_event(self, event):
         self.state_machine.handle_state_event(('INPUT', event))
 
-#Drill#08_과제제출_2022182001_강종훈
+#Drill#08_과제제출_2022182001_강종훈.

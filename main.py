@@ -10,11 +10,13 @@ def handle_events():
     global running
 
     event_list = get_events()
-    for event in event_list:
+    for event in event_list: # 여기서 이벤트는 키보드나 마우ㅡ 이벤트를 뜻함
         if event.type == SDL_QUIT:
             running = False
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running = False
+        else:
+            boy.handle_event(event)
 
 
 

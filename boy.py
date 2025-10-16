@@ -49,7 +49,7 @@ class AutoRun:
         elif self.boy.x<0:
             self.boy.dir = 1
             self.boy.face_dir = 1
-        self.boy.x += self.boy.dir *5
+        self.boy.x += self.boy.dir *10
 
     def draw(self):
         if self.boy.face_dir == 1: # right

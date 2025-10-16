@@ -20,7 +20,30 @@ def left_down(e):
 def left_up(e):
     return e[0] == 'INPUT'and e[1].type == SDL_KEYUP and e[1].key == SDLK_LEFT
 
+class AutoRun:
 
+    def __init__(self, boy):
+        self.boy = boy
+
+    def enter(self, e):
+        self.boy.dir = 1
+        if right_down(e) or left_up(e):
+            self.boy.dir = self.boy.face_dir = 1
+        elif left_down(e) or right_up(e):
+            self.boy.dir = self.boy.face_dir =-1
+
+    def exit(self, e):
+        pass
+
+    def do(self):
+        self.boy.frame = (self.boy.frame + 1) % 8
+        self.boy.x += self.boy.dir *5
+
+    def draw(self):
+        if self.boy.face_dir == 1: # right
+            self.boy.image.clip_draw(self.boy.frame * 100, 100, 100, 100, self.boy.x, self.boy.y)
+        else: # face_dir == -1: # left
+            self.boy.image.clip_draw(self.boy.frame * 100, 0, 100, 100, self.boy.x, self.boy.y)
 
 
 class Run:
@@ -104,14 +127,12 @@ class Boy:
         self.SLEEP = Sleep(self)
         self.IDLE = Idle(self)
         self.RUN = Run(self)
-
         self.state_machine = StateMachine(
             self.IDLE,
         {
             self.SLEEP: {right_down: self.RUN, left_down: self.RUN, space_down:self.IDLE},
             self.IDLE: {right_up: self.RUN, left_up: self.RUN, right_down: self.RUN, left_down: self.RUN, time_out:self.SLEEP},
             self.RUN: {right_down: self.IDLE, left_down: self.IDLE, right_up: self.IDLE, left_up: self.IDLE},
-
             }
         )
 

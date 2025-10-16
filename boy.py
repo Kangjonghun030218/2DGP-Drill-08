@@ -37,6 +37,7 @@ class AutoRun:
             self.boy.x+= self.boy.dir *5
         elif a_up(e):
             self.boy.dir = self.boy.face_dir =-1
+        self.boy.wait_start_time = get_time()
 
     def exit(self, e):
         pass
@@ -50,6 +51,8 @@ class AutoRun:
             self.boy.dir = 1
             self.boy.face_dir = 1
         self.boy.x += self.boy.dir *10
+        if get_time() - self.boy.wait_start_time > 5.0:
+            self.boy.state_machine.handle_state_event(('TIME_OUT', None))
 
     def draw(self):
         if self.boy.face_dir == 1: # right
@@ -76,6 +79,7 @@ class Run:
     def do(self):
         self.boy.frame = (self.boy.frame + 1) % 8
         self.boy.x += self.boy.dir *5
+
 
     def draw(self):
         if self.boy.face_dir == 1: # right
@@ -146,7 +150,7 @@ class Boy:
             self.SLEEP: {right_down: self.RUN, left_down: self.RUN, space_down:self.IDLE},
             self.IDLE: {right_up: self.RUN, left_up: self.RUN, right_down: self.RUN, left_down: self.RUN, time_out:self.SLEEP,a_down:self.AUTO_RUN},
             self.RUN: {right_down: self.IDLE, left_down: self.IDLE, right_up: self.IDLE, left_up: self.IDLE},
-            self.AUTO_RUN: {}
+            self.AUTO_RUN: {time_out:self.IDLE}
             }
         )
 

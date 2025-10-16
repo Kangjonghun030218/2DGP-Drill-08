@@ -31,12 +31,7 @@ class AutoRun:
         self.boy = boy
 
     def enter(self, e):
-        self.boy.dir = 1
-        if a_down(e):
-            self.boy.dir = self.boy.face_dir = 1
-            self.boy.x+= self.boy.dir *5
-        elif a_up(e):
-            self.boy.dir = self.boy.face_dir =-1
+        self.boy.dir = self.boy.face_dir
         self.boy.wait_start_time = get_time()
 
     def exit(self, e):

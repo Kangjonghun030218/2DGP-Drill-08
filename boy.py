@@ -43,9 +43,12 @@ class AutoRun:
         if self.boy.x>780:
             self.boy.dir = -1
             self.boy.face_dir = -1
+            self.boy.x=780
         elif self.boy.x<20:
             self.boy.dir = 1
             self.boy.face_dir = 1
+            self.boy.x=20
+
 
         if get_time() - self.boy.wait_start_time > 5.0:
             self.boy.state_machine.handle_state_event(('TIME_OUT', None))

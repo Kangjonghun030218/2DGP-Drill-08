@@ -1,5 +1,6 @@
 from pico2d import load_image, get_time
 from sdl2 import SDL_KEYDOWN, SDLK_SPACE, SDLK_RIGHT, SDL_KEYUP, SDLK_LEFT
+from sdl2 import SDLK_a
 
 from state_machine import StateMachine
 
@@ -31,9 +32,10 @@ class AutoRun:
 
     def enter(self, e):
         self.boy.dir = 1
-        if right_down(e) or left_up(e):
+        if a_down(e):
             self.boy.dir = self.boy.face_dir = 1
-        elif left_down(e) or right_up(e):
+            self.boy.x+= self.boy.dir *5
+        elif a_up(e):
             self.boy.dir = self.boy.face_dir =-1
 
     def exit(self, e):
@@ -136,7 +138,7 @@ class Boy:
             self.IDLE,
         {
             self.SLEEP: {right_down: self.RUN, left_down: self.RUN, space_down:self.IDLE},
-            self.IDLE: {right_up: self.RUN, left_up: self.RUN, right_down: self.RUN, left_down: self.RUN, time_out:self.SLEEP},
+            self.IDLE: {right_up: self.RUN, left_up: self.RUN, right_down: self.RUN, left_down: self.RUN, time_out:self.SLEEP,a_down:self.AUTO_RUN},
             self.RUN: {right_down: self.IDLE, left_down: self.IDLE, right_up: self.IDLE, left_up: self.IDLE},
             self.AUTO_RUN: {}
             }
